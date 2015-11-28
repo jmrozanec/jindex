@@ -31,7 +31,7 @@ public class Analyzer {
             citations.add(new Tuple(othernode.getProperty(ID).toString(), numberOfCitations(othernode)));
         });
         Collections.sort(citations, Comparator.reverseOrder());
-        System.out.println(String.format("%s: h=%s g2=%s y=%s", me.getProperty(ID), hindex(citations), gindex(citations), yongIndex(citations)));
+        System.out.println(String.format("%s: #citations=%s h=%s g=%s y=%s", me.getProperty(ID), numberOfCitations(me), hindex(citations), gindex(citations), yongIndex(citations)));
     }
 
     int hindex(List<Tuple> tuples){
@@ -48,10 +48,10 @@ public class Analyzer {
         int g = 0;
         for(Tuple tuple : tuples){
             count += tuple.count;
-            g = tuple.count;
-            if(Math.pow(g, 2)<=count){
+            if(Math.pow(g+1, 2)>count){
                 break;
             }
+            g++;
         }
         return g;
     }
