@@ -1,8 +1,8 @@
-package com.jindex;
+package com.jindex.surfer;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.jindex.model.Artifact;
+import com.jindex.surfer.model.Artifact;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;

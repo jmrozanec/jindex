@@ -1,4 +1,4 @@
-package com.jindex.connector;
+package com.jindex.surfer.connector;
 
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.RepositorySystem;

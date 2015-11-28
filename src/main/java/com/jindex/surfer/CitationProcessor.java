@@ -1,5 +1,5 @@
-package com.jindex;
-import com.jindex.model.Artifact;
+package com.jindex.surfer;
+import com.jindex.surfer.model.Artifact;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

@@ -1,4 +1,4 @@
-package com.jindex.connector;
+package com.jindex.surfer.connector;
 
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;

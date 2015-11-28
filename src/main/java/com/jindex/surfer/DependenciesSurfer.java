@@ -1,13 +1,17 @@
-package com.jindex;
+package com.jindex.surfer;
 
 import com.google.common.collect.Queues;
-import com.jindex.model.Artifact;
+import com.jindex.surfer.model.Artifact;
 import org.apache.log4j.Logger;
 
 import java.util.Queue;
 
-public class Main {
-    private static final Logger log = Logger.getLogger(Main.class);
+/**
+ * Performs a random walk through maven graph and extracts libraries and dependencies metadata
+ * Algorithm is described in README.md
+ */
+public class DependenciesSurfer {
+    private static final Logger log = Logger.getLogger(DependenciesSurfer.class);
 
     public static void main(String[] args) throws Exception {
         double maxdependencies = 7000000;

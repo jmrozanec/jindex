@@ -1,8 +1,8 @@
-package com.jindex;
+package com.jindex.surfer;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.jindex.connector.Booter;
+import com.jindex.surfer.connector.Booter;
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
@@ -24,12 +24,12 @@ public class DependenciesGraphWalker {
     private RepositorySystem system;
     private RepositorySystemSession session;
     private Set<String> dependencies;
-    private Queue<com.jindex.model.Artifact> projectsqueue;
+    private Queue<com.jindex.surfer.model.Artifact> projectsqueue;
     private CitationProcessor citationProcessor;
     private PrintWriter printWriter;
     private DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
 
-    public DependenciesGraphWalker(Queue<com.jindex.model.Artifact> projectsqueue, CitationProcessor citationProcessor) throws FileNotFoundException {
+    public DependenciesGraphWalker(Queue<com.jindex.surfer.model.Artifact> projectsqueue, CitationProcessor citationProcessor) throws FileNotFoundException {
         system = Booter.newRepositorySystem();
         session = Booter.newRepositorySystemSession(system);
         dependencies = Sets.newHashSet();
@@ -38,7 +38,7 @@ public class DependenciesGraphWalker {
         printWriter = new PrintWriter("projects.txt");
     }
 
-    public int process(com.jindex.model.Artifact project) throws Exception {
+    public int process(com.jindex.surfer.model.Artifact project) throws Exception {
         String artifactstring = id(project);
         if(!dependencies.contains(artifactstring)){
             dependencies.add(artifactstring);
@@ -48,7 +48,7 @@ public class DependenciesGraphWalker {
                     .stream()
                     .forEach(dependency -> {
                         Artifact dep = dependency.getArtifact();
-                        com.jindex.model.Artifact a = new com.jindex.model.Artifact(dep.getGroupId(), dep.getArtifactId(), dep.getVersion());
+                        com.jindex.surfer.model.Artifact a = new com.jindex.surfer.model.Artifact(dep.getGroupId(), dep.getArtifactId(), dep.getVersion());
                         if(!dependencies.contains(id(a))){
                             projectsqueue.add(a);
                         }
@@ -73,7 +73,7 @@ public class DependenciesGraphWalker {
         return Lists.newArrayList();
     }
 
-    String id(com.jindex.model.Artifact artifact){
+    String id(com.jindex.surfer.model.Artifact artifact){
         return String.format("%s:%s", artifact.getGroupid(), artifact.getArtifactid());
     }
 }

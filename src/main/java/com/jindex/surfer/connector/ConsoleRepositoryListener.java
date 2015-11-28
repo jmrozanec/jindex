@@ -1,4 +1,4 @@
-package com.jindex.connector;
+package com.jindex.surfer.connector;
 
 import java.io.PrintStream;
 

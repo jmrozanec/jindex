@@ -1,4 +1,4 @@
-package com.jindex.model;
+package com.jindex.surfer.model;
 
 import com.google.common.annotations.VisibleForTesting;
 
