@@ -1,5 +1,6 @@
 package com.jindex.graph;
 
+import com.jindex.surfer.model.Artifact;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -14,8 +15,8 @@ public class DependenciesGraphLoader {
         DependenciesGraph dependenciesGraph = new DependenciesGraph();
         Files.lines(Paths.get(citations.toURI())).forEach(line -> {
             String [] array = line.split(",");
-            String origin = array[0];
-            String cited = array[1];
+            String origin = array[0].split(":")[0]+":"+array[0].split(":")[1];
+            String cited = array[1].split(":")[0]+":"+array[1].split(":")[1];
             try {
                 dependenciesGraph.addVertex(origin, cited);
             } catch (IOException e) {

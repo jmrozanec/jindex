@@ -1,4 +1,4 @@
-package com.jindex;
+package com.jindex.analytics;
 
 import com.jindex.graph.DependenciesGraph;
 import com.jindex.graph.DependenciesGraphLoader;
@@ -11,6 +11,10 @@ public class AnalysisMain {
         DependenciesGraphLoader loader = new DependenciesGraphLoader();
         DependenciesGraph dependenciesGraph = loader.loadGraph(new File("graphs/citations.txt.bk"));
         Analyzer analyzer = new Analyzer();
-        analyzer.analyze(dependenciesGraph);
+        ResultCollector resultCollector = new ResultCollector();
+        analyzer.analyze(dependenciesGraph, resultCollector);
+
+        Record record = analyzer.analyzeNode(dependenciesGraph, dependenciesGraph.getNode("com.cronutils:cron-utils"));
+        System.out.println(record);
     }
 }

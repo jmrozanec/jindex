@@ -1,9 +1,8 @@
 package com.jindex.graph;
 
 import com.google.common.annotations.VisibleForTesting;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Transaction;
+import com.google.common.collect.Lists;
+import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.tooling.GlobalGraphOperations;
@@ -11,6 +10,8 @@ import org.neo4j.tooling.GlobalGraphOperations;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 public class DependenciesGraph {
     private static final String ID = "id";
@@ -18,7 +19,7 @@ public class DependenciesGraph {
     private Index<Node> idIndex;
 
     public DependenciesGraph() throws IOException {
-        File embedded = new File("neo4j");
+        File embedded = new File("/tmp/neo4j/"+ UUID.randomUUID().toString());
         embedded.mkdirs();
         graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(embedded);
         Transaction tx = graphDb.beginTx();
@@ -40,6 +41,26 @@ public class DependenciesGraph {
 
     public Iterator<Node> listNodes(){
         return GlobalGraphOperations.at(graphDb).getAllNodes().iterator();
+    }
+
+    public List<Node> getDependencies(Node node){
+        List<Node> list = Lists.newLinkedList();
+        node.getRelationships(RelTypes.DEPENDS_ON).forEach(rel -> {
+            if(rel.getStartNode().equals(node)){
+                list.add(rel.getEndNode());
+            }
+        });
+        return list;
+    }
+
+    public List<Node> getUsages(Node node){
+        List<Node> list = Lists.newLinkedList();
+        node.getRelationships(RelTypes.USED_BY).forEach(rel -> {
+            if(rel.getStartNode().equals(node)){
+                list.add(rel.getEndNode());
+            }
+        });
+        return list;
     }
 
     @VisibleForTesting
