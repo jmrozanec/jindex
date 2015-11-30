@@ -75,7 +75,7 @@ public class Analyzer {
     }
 
     double yongIndex(List<Tuple> tuples){
-        return Math.sqrt(tuples.size());
+        return 0.54*Math.sqrt(tuples.size());
     }
 
     //http://introcs.cs.princeton.edu/java/16pagerank/
